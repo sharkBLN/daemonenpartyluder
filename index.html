@@ -190,6 +190,78 @@
         @keyframes fadeIn {
             to { opacity: 1; }
         }
+
+        /* Main Navigation */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--primary-purple);
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-purple);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .logo-icon {
+            font-size: 20px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-item {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--primary-purple);
+            background: rgba(224, 102, 255, 0.1);
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 2px;
+            background: var(--primary-purple);
+        }
+
+        /* Adjust main content for fixed nav */
+        body {
+            padding-top: 60px;
+        }
     </style>
 </head>
 <body>
@@ -231,11 +303,28 @@
             </div>
 
             <div class="project-links">
-                <a href="#" class="project-link">🎵 techno lab • sonic experiments</a>
-                <a href="#" class="project-link">💻 code vault • digital sorcery</a>
-                <a href="#" class="project-link">📺 happening • reality broadcasts</a>
-                <a href="#" class="project-link">🎬 underground cinema • visual stories</a>
-                <a href="#" class="project-link">🌈 unity space • one human race</a>
+                <a href="techno-lab.html" class="project-link">🎵 techno lab • sonic experiments</a>
+                <a href="code-vault.html" class="project-link">💻 code vault • digital sorcery</a>
+                <a href="happening.html" class="project-link">📺 happening • reality broadcasts</a>
+                <a href="cinema.html" class="project-link">🎬 underground cinema • visual stories</a>
+                <a href="unity.html" class="project-link">🌈 unity space • one human race</a>
+                <a href="about.html" class="project-link">⚡ about nil • digital architect</a>
+            </div>
+
+            <!-- Main Navigation Bar -->
+            <div class="main-nav">
+                <div class="nav-container">
+                    <div class="nav-logo">
+                        <span class="logo-icon">⚡</span>
+                        <span class="logo-text">nil.empire</span>
+                    </div>
+                    <nav class="nav-menu">
+                        <a href="index.html" class="nav-item active">home</a>
+                        <a href="projects.html" class="nav-item">projects</a>
+                        <a href="lab.html" class="nav-item">lab</a>
+                        <a href="contact.html" class="nav-item">contact</a>
+                    </nav>
+                </div>
             </div>
 
             <div class="prompt">└──╼ $ <span class="cursor"></span></div>
