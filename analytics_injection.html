@@ -1,0 +1,32 @@
+<!-- DROP THIS IN EVERY PAGE HEAD SECTION -->
+
+<!-- Google Analytics - Visitor Intelligence -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NRZ256XRGF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NRZ256XRGF');
+</script>
+
+<!-- Visitor Counter (Local) -->
+<script>
+function trackVisitor() {
+  let visits = localStorage.getItem('nil-empire-visits') || 0;
+  visits = parseInt(visits) + 1;
+  localStorage.setItem('nil-empire-visits', visits);
+  
+  // Display counter if element exists
+  const counter = document.getElementById('visitor-count');
+  if (counter) counter.textContent = visits;
+}
+// Auto-run on page load
+window.addEventListener('load', trackVisitor);
+</script>
+
+<!-- Visitor Counter Display (add anywhere in body) -->
+<div style="position: fixed; bottom: 20px; right: 20px; background: rgba(13,13,13,0.9); 
+            border: 1px solid #E066FF; padding: 8px 12px; border-radius: 4px; 
+            font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #E066FF; z-index: 999;">
+  👥 visitors: <span id="visitor-count">loading...</span>
+</div>
