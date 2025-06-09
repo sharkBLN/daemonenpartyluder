@@ -40,6 +40,7 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            padding-top: 60px;
         }
 
         /* Purple Matrix Rain Canvas */
@@ -267,15 +268,27 @@
             height: 2px;
             background: var(--primary-purple);
         }
-
-        /* Adjust main content for fixed nav */
-        body {
-            padding-top: 60px;
-        }
     </style>
 </head>
 <body>
     <canvas id="matrix"></canvas>
+
+    <div class="main-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">nil.empire</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item active">home</a>
+                <a href="matrix_rain_neural_lab.html" class="nav-item">music lab</a>
+                <a href="cyberpunk_club_intel.html" class="nav-item">club intel</a>
+                <a href="after_aua_board.html" class="nav-item">after-aua</a>
+                <a href="chaos_board-3.html" class="nav-item">chaos</a>
+                <a href="club_lineup_board%20(2).html" class="nav-item">lineup</a>
+            </nav>
+        </div>
+    </div>
 
     <div class="terminal-window">
         <div class="window-header">
@@ -313,29 +326,11 @@
             </div>
 
             <div class="project-links">
-                <a href="index.html" class="project-link">🎵 techno lab • sonic experiments</a>
-                <a href="index.html" class="project-link">💻 code vault • digital sorcery</a>
-                <a href="index.html" class="project-link">📺 happening • reality broadcasts</a>
-                <a href="index.html" class="project-link">🎬 underground cinema • visual stories</a>
-                <a href="index.html" class="project-link">🌈 unity space • one human race</a>
-                <a href="index.html" class="project-link">🏙️ berlin nights • club intel</a>
-            </div>
-
-            <!-- Main Navigation Bar -->
-            <div class="main-nav">
-                <div class="nav-container">
-                    <div class="nav-logo">
-                        <span class="logo-icon">⚡</span>
-                        <span class="logo-text">nil.empire</span>
-                    </div>
-                    <nav class="nav-menu">
-                        <a href="index.html" class="nav-item active">home</a>
-                        <a href="index.html" class="nav-item">music</a>
-                        <a href="index.html" class="nav-item">code</a>
-                        <a href="index.html" class="nav-item">clubs</a>
-                        <a href="index.html" class="nav-item">unity</a>
-                    </nav>
-                </div>
+                <a href="matrix_rain_neural_lab.html" class="project-link">🎵 techno lab • sonic experiments</a>
+                <a href="cyberpunk_club_intel.html" class="project-link">🏙️ berlin nights • club intel</a>
+                <a href="after_aua_board.html" class="project-link">✨ after-aua • club board</a>
+                <a href="chaos_board-3.html" class="project-link">🌀 chaos board • oracle zone</a>
+                <a href="club_lineup_board%20(2).html" class="project-link">🎤 club lineup • running order</a>
             </div>
 
             <div class="prompt">└──╼ $ <span class="cursor"></span></div>
@@ -356,7 +351,7 @@
         canvas.height = window.innerHeight;
 
         const symbols = '🎵🎶🎧🎤🔊💿🎛️⚡🌊♪♫♬♩♭♮♯🎸🥁🎹📻💾🔥⭐✨🎆🎇140NILBERLIN';
-        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトホモヨョロヲゴゾドボポヴッン';
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメモレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         const alphabet = symbols + katakana + latin;
 
