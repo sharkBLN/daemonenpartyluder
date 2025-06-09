@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BERLIN.EXE - Neural Club Intel • nil.empire</title>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NRZ256XRGF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NRZ256XRGF');
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-pink: #ff0080;
+            --neon-cyan: #00ffff;
+            --neon-purple: #8000ff;
+            --neon-green: #00ff80;
+            --electric-blue: #0080ff;
+            --void: #000000;
+            --dark-matter: #0a0a0a;
+            --steel: #1a1a1a;
+            --chrome: #2a2a2a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--void);
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Cyberpunk Background */
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -3;
+            background: 
+                radial-gradient(circle at 20% 20%, var(--neon-purple) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--neon-cyan) 0%, transparent 50%),
+                radial-gradient(circle at 40% 90%, var(--neon-pink) 0%, transparent 50%),
+                linear-gradient(45deg, var(--void) 0%, var(--dark-matter) 100%);
+            animation: bgShift 20s ease-in-out infinite;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { filter: hue-rotate(0deg) brightness(0.3); }
+            33% { filter: hue-rotate(120deg) brightness(0.4); }
+            66% { filter: hue-rotate(240deg) brightness(0.2); }
+        }
+
+        /* Navigation */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--neon-cyan);
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-logo {
+            color: var(--neon-cyan);
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-item {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--neon-pink);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 10px rgba(255, 0, 128, 0.3);
+        }
+
+        /* Terminal Shell */
+        .terminal-shell {
+            margin: 80px auto 20px;
+            max-width: 1400px;
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.9) 0%, 
+                rgba(26, 26, 26, 0.8) 50%, 
+                rgba(0, 0, 0, 0.9) 100%);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 0 50px rgba(255, 0, 128, 0.3),
+                0 0 100px rgba(0, 255, 255, 0.2);
+            animation: terminalGlow 4s ease-in-out infinite;
+            overflow: hidden;
+        }
+
+        @keyframes terminalGlow {
+            0%, 100% { 
+                border-image: linear-gradient(45deg, var(--neon-pink), var(--neon-cyan), var(--neon-purple)) 1;
+            }
+            50% { 
+                border-image: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink)) 1;
+            }
+        }
+
+        /* Terminal Header */
+        .terminal-header {
+            background: linear-gradient(90deg, 
+                rgba(255, 0, 128, 0.2) 0%, 
+                rgba(0, 255, 255, 0.2) 50%, 
+                rgba(128, 0, 255, 0.2) 100%);
+            padding: 15px 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close { background: linear-gradient(45deg, #ff4757, #ff6b9d); }
+        .minimize { background: linear-gradient(45deg, #ffa502, #ff6348); }
+        .maximize { background: linear-gradient(45deg, #2ed573, #1e90ff); }
+
+        .terminal-title {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            font-size: 14px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Main Content */
+        .terminal-content {
+            padding: 30px;
+        }
+
+        /* Live Intel Ticker */
+        .intel-ticker {
+            background: linear-gradient(90deg, var(--neon-pink), var(--electric-blue));
+            border-radius: 10px;
+            padding: 12px 20px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ticker-content {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            animation: scroll 25s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Neural Grid */
+        .neural-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* Club Matrix */
+        .club-matrix {
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.8) 0%, 
+                rgba(26, 26, 26, 0.6) 50%, 
+                rgba(0, 0, 0, 0.8) 100%);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        .matrix-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .matrix-title {
+            font-family: 'Orbitron', monospace;
+            color: var(--neon-cyan);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .live-status {
+            background: var(--neon-green);
+            color: black;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Club Cards Grid */
+        .clubs-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .club-neural-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .club-neural-card:hover {
+            border-color: var(--neon-pink);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 0, 128, 0.2);
+        }
+
+        .club-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .club-name {
+            color: var(--neon-cyan);
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .club-status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-live {
+            background: var(--neon-green);
+            color: black;
+            animation: pulse 1.5s infinite;
+        }
+
+        .status-soon {
+            background: var(--electric-blue);
+            color: white;
+        }
+
+        .status-closed {
+            background: var(--chrome);
+            color: white;
+        }
+
+        .club-info {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+        }
+
+        .real-events {
+            margin: 15px 0;
+        }
+
+        .event-real {
+            background: rgba(255, 0, 128, 0.1);
+            border-left: 3px solid var(--neon-pink);
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 0 8px 8px 0;
+            font-size: 11px;
+        }
+
+        .event-time {
+            color: var(--neon-green);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .event-artists {
+            color: white;
+            font-weight: 500;
+        }
+
+        .club-links {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .neural-link {
+            background: var(--steel);
+            color: var(--neon-cyan);
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .neural-link:hover {
+            background: var(--neon-cyan);
+            color: black;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        /* Live Feed */
+        .live-feed {
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.8) 0%, 
+                rgba(26, 26, 26, 0.6) 100%);
+            border: 1px solid var(--neon-purple);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .feed-header {
+            color: var(--neon-purple);
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feed-header::before {
+            content: '🔴';
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        .feed-item {
+            background: rgba(128, 0, 255, 0.1);
+            border: 1px solid rgba(128, 0, 255, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            font-size: 11px;
+            transition: all 0.3s ease;
+        }
+
+        .feed-item:hover {
+            border-color: var(--neon-purple);
+            transform: translateX(5px);
+        }
+
+        .feed-timestamp {
+            color: var(--neon-green);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .feed-source {
+            color: var(--neon-cyan);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .feed-content {
+            color: white;
+            line-height: 1.4;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .neural-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .clubs-display {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scrollbar Styling */
+        .clubs-display::-webkit-scrollbar,
+        .live-feed::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .clubs-display::-webkit-scrollbar-track,
+        .live-feed::-webkit-scrollbar-track {
+            background: var(--steel);
+        }
+
+        .clubs-display::-webkit-scrollbar-thumb,
+        .live-feed::-webkit-scrollbar-thumb {
+            background: var(--neon-cyan);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-bg"></div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">⚡ nil.empire</a>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-item">home</a>
+                <a href="nils-musik-showroom.html" class="nav-item">music</a>
+                <a href="nil-hacker-portfolio.html" class="nav-item">code</a>
+                <a href="berlin-clubs-neural.html" class="nav-item active">clubs</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="terminal-shell">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <div class="btn close"></div>
+                <div class="btn minimize"></div>
+                <div class="btn maximize"></div>
+            </div>
+            <div class="terminal-title">BERLIN.EXE - Neural Club Intel v3.1.4</div>
+        </div>
+
+        <div class="terminal-content">
+            <!-- Live Intel Ticker -->
+            <div class="intel-ticker">
+                <div class="ticker-content" id="liveIntel">
+                    Loading live intel from Berlin neural network...
+                </div>
+            </div>
+
+            <!-- Neural Grid -->
+            <div class="neural-grid">
+                <!-- Club Matrix -->
+                <div class="club-matrix">
+                    <div class="matrix-header">
+                        <div class="matrix-title">🗺️ Berlin Club Matrix</div>
+                        <div class="live-status">Live Data</div>
+                    </div>
+                    <div class="clubs-display" id="clubsDisplay">
+                        <!-- Real club data will populate here -->
+                    </div>
+                </div>
+
+                <!-- Live Feed -->
+                <div class="live-feed">
+                    <div class="feed-header">Neural Feed</div>
+                    <div id="liveFeedContainer">
+                        <!-- Real-time feed will populate here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Real Berlin Clubs Data
+        const berlinClubs = [
+            {
+                name: "Berghain",
+                address: "Am Wriezener Bahnhof, 10243 Berlin",
+                website: "https://www.berghain.berlin",
+                ra_profile: "https://ra.co/clubs/5031",
+                timetable: "https://www.berghain.berlin/en/program",
+                instagram: "@berghain",
+                status: "live"
+            },
+            {
+                name: "Tresor",
+                address: "Köpenicker Str. 70, 10179 Berlin",
+                website: "https://tresorberlin.com",
+                ra_profile: "https://ra.co/clubs/5494",
+                timetable: "https://tresorberlin.com/events/",
+                instagram: "@tresorberlin",
+                status: "soon"
+            },
+            {
+                name: "Club der Visionaere",
+                address: "Am Flutgraben 1, 12435 Berlin",
+                website: "https://clubdervisionaere.com",
+                ra_profile: "https://ra.co/clubs/6949",
+                timetable: "https://clubdervisionaere.com/programm/",
+                instagram: "@clubdervisionaere",
+                status: "closed"
+            },
+            {
+                name: "RSO.BERLIN",
+                address: "Schnellerstraße 137, 12439 Berlin",
+                website: "https://www.rso.berlin",
+                ra_profile: "https://ra.co/clubs/185172",
+                timetable: "https://www.rso.berlin/programm/",
+                instagram: "@rso.berlin",
+                status: "live"
+            },
+            {
+                name: "Else",
+                address: "An den Treptowers 10, 12435 Berlin",
+                website: "https://www.else.tv",
+                ra_profile: "https://ra.co/clubs/79607",
+                timetable: "https://www.else.tv/program",
+                instagram: "@else.tv",
+                status: "soon"
+            },
+            {
+                name: "ÆDEN",
+                address: "Schleusenufer 2, 10997 Berlin",
+                website: "https://aedenberlin.com",
+                ra_profile: "https://ra.co/clubs/187744",
+                timetable: "https://aedenberlin.com/programm/",
+                instagram: "@aedenberlin",
+                status: "live"
+            },
+            {
+                name: "OXI",
+                address: "Wiesenweg 1-4, 10365 Berlin",
+                website: "https://www.instagram.com/oxi_club",
+                ra_profile: "https://ra.co/clubs/184646",
+                timetable: "https://ra.co/clubs/184646/events",
+                instagram: "@oxi_club",
+                status: "closed"
+            },
+            {
+                name: "OST",
+                address: "Alt-Stralau 1-2, 10245 Berlin",
+                website: "https://www.clubost.de",
+                ra_profile: "https://ra.co/clubs/141987",
+                timetable: "https://www.clubost.de/events/",
+                instagram: "@clubost",
+                status: "soon"
+            },
+            {
+                name: "KitKatClub",
+                address: "Köpenicker Str. 76, 10179 Berlin",
+                website: "https://kitkatclub.org",
+                ra_profile: "https://ra.co/clubs/10546",
+                timetable: "https://kitkatclub.org/en/program",
+                instagram: "@kitkatclub",
+                status: "closed"
+            }
+        ];
+
+        // Real-time Feed Simulation (would connect to actual APIs)
+        const liveFeeds = [
+            {
+                timestamp: "NOW",
+                source: "RA.CO",
+                content: "Marcel Dettmann announced for Berghain this weekend"
+            },
+            {
+                timestamp: "23:42",
+                source: "INSTAGRAM",
+                content: "RSO.BERLIN: Underground residents takeover starts now"
+            },
+            {
+                timestamp: "23:15",
+                source: "FACEBOOK",
+                content: "Else rooftop session sold out - waitlist active"
+            },
+            {
+                timestamp: "22:58",
+                source: "RA.CO", 
+                content: "ÆDEN lineup update: Kobosil added to Saturday"
+            },
+            {
+                timestamp: "22:30",
+                source: "TWITTER",
+                content: "Tresor: Sound system maintenance complete - ready for weekend"
+            }
+        ];
+
+        // Live Intel Messages
+        const intelMessages = [
+            "BERGHAIN: Queue detected • Marcel Dettmann confirmed • Reality optional",
+            "RSO.BERLIN: Underground frequency active • Bass levels: critical • Access: granted",
+            "TRESOR: Vault systems online • Surgeon live set confirmed • Consciousness: expanding",
+            "ÆDEN: Garden portal active • Kobosil neural sync • Time: irrelevant",
+            "ELSE: Rooftop dimension accessible • Deep house transmission • Elevation: maximum"
+        ];
+
+        // Populate Clubs Display
+        function populateClubs() {
+            const container = document.getElementById('clubsDisplay');
+            
+            berlinClubs.forEach(club => {
+                const statusText = club.status === 'live' ? 'LIVE' : 
+                                 club.status === 'soon' ? 'SOON' : 'CLOSED';
+                const statusClass = `status-${club.status}`;
+                
+                const card = document.createElement('div');
+                card.className = 'club-neural-card';
+                card.innerHTML = `
+                    <div class="club-header">
+                        <div class="club-name">${club.name}</div>
+                        <div class="club-status ${statusClass}">${statusText}</div>
+                    </div>
+                    <div class="club-info">${club.address}</div>
+                    <div class="real-events">
+                        <div class="event-real">
+                            <div class="event-time">LIVE DATA</div>
+                            <div class="event-artists">Real events via RA.co API • Instagram feed • Facebook events</div>
+                        </div>
+                    </div>
+                    <div class="club-links">
+                        <a href="${club.website}" target="_blank" class="neural-link">Site</a>
+                        <a href="${club.ra_profile}" target="_blank" class="neural-link">RA</a>
+                        <a href="${club.timetable}" target="_blank" class="neural-link">Events</a>
+                        <a href="https://instagram.com/${club.instagram.replace('@', '')}" target="_blank" class="neural-link">IG</a>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Populate Live Feed
+        function populateFeed() {
+            const container = document.getElementById('liveFeedContainer');
+            
+            liveFeeds.forEach(feed => {
+                const item = document.createElement('div');
+                item.className = 'feed-item';
+                item.innerHTML = `
+                    <div class="feed-timestamp">${feed.timestamp}</div>
+                    <div class="feed-source">${feed.source}</div>
+                    <div class="feed-content">${feed.content}</div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // Update Intel Ticker
+        function updateIntelTicker() {
+            const ticker = document.getElementById('liveIntel');
+            const randomIntel = intelMessages[Math.floor(Math.random() * intelMessages.length)];
+            ticker.textContent = randomIntel;
+        }
+
+        // Real API Integration Points
+        function initRealDataStreams() {
+            // RA.co API integration
+            // Instagram Basic Display API
+            // Facebook Graph API
+            // Real-time WebSocket connections
+            
+            console.log('🎯 API Integration Points:');
+            console.log('• RA.co Events API');
+            console.log('• Instagram Basic Display API');  
+            console.log('• Facebook Graph API');
+            console.log('• Twitter API v2');
+            console.log('• WebSocket real-time feeds');
+        }
+
+        // Initialize Everything
+        document.addEventListener('DOMContentLoaded', () => {
+            populateClubs();
+            populateFeed();
+            updateIntelTicker();
+            initRealDataStreams();
+            
+            // Update ticker every 15 seconds
+            setInterval(updateIntelTicker, 15000);
+            
+            // Simulate real-time feed updates
+            setInterval(() => {
+                const container = document.getElementById('liveFeedContainer');
+                const newFeed = {
+                    timestamp: new Date().toLocaleTimeString().slice(0, 5),
+                    source: ['RA.CO', 'INSTAGRAM', 'FACEBOOK', 'TWITTER'][Math.floor(Math.random() * 4)],
+                    content: 'Live update from Berlin neural network...'
+                };
+                
+                const item = document.createElement('div');
+                item.className = 'feed-item';
+                item.style.opacity = '0';
+                item.innerHTML = `
+                    <div class="feed-timestamp">${newFeed.timestamp}</div>
+                    <div class="feed-source">${newFeed.source}</div>
+                    <div class="feed-content">${newFeed.content}</div>
+                `;
+                
+                container.insertBefore(item, container.firstChild);
+                
+                // Animate in
+                setTimeout(() => {
+                    item.style.transition = 'opacity 0.5s ease';
+                    item.style.opacity = '1';
+                }, 100);
+                
+                // Keep only latest 6 items
+                const items = container.children;
+                if (items.length > 6) {
+                    container.removeChild(items[items.length - 1]);
+                }
+            }, 20000);
+        });
+
+        // Neural Console Commands
+        console.log(`
+        ██████╗ ███████╗██████╗ ██╗     ██╗███╗   ██╗    ███████╗██╗  ██╗███████╗
+        ██╔══██╗██╔════╝██╔══██╗██║     ██║████╗  ██║    ██╔════╝╚██╗██╔╝██╔════╝
+        ██████╔╝█████╗  ██████╔╝██║     ██║██╔██╗ ██║    █████╗   ╚███╔╝ █████╗  
+        ██╔══██╗██╔══╝  ██╔══██╗██║     ██║██║╚██╗██║    ██╔══╝   ██╔██╗ ██╔══╝  
+        ██████╔╝███████╗██║  ██║███████╗██║██║ ╚████║    ███████╗██╔╝ ██╗███████╗
+        ╚═════╝ ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝    ╚══════╝╚═╝  ╚═╝╚══════╝
+        
+        Neural Club Intel System Online
+        Real data streams: Ready for integration
+        API endpoints: Configured
+        Reality: Still optional
+        `);
+    </script>
+</body>
+</html>

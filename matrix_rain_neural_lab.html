@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEURAL MUSIC LAB.EXE - Sonic Consciousness • nil.empire</title>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NRZ256XRGF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NRZ256XRGF');
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-pink: #ff0080;
+            --neon-cyan: #00ffff;
+            --neon-purple: #8000ff;
+            --neon-green: #00ff80;
+            --electric-blue: #0080ff;
+            --void: #000000;
+            --dark-matter: #0a0a0a;
+            --steel: #1a1a1a;
+            --chrome: #2a2a2a;
+            --matrix-green: rgba(255, 255, 255, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--void);
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Matrix Rain Canvas */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -4;
+            pointer-events: none;
+        }
+
+        /* Cyberpunk Background - Now More Subtle */
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -3;
+            background: 
+                radial-gradient(circle at 20% 20%, var(--neon-purple) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--neon-cyan) 0%, transparent 50%),
+                radial-gradient(circle at 40% 90%, var(--neon-pink) 0%, transparent 50%),
+                linear-gradient(45deg, var(--void) 0%, var(--dark-matter) 100%);
+            animation: bgShift 20s ease-in-out infinite;
+            opacity: 0.3; /* Made more subtle */
+        }
+
+        @keyframes bgShift {
+            0%, 100% { filter: hue-rotate(0deg) brightness(0.2); }
+            33% { filter: hue-rotate(120deg) brightness(0.25); }
+            66% { filter: hue-rotate(240deg) brightness(0.15); }
+        }
+
+        /* Particle System - Reduced opacity */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            opacity: 0.4; /* Reduced from 0.6 */
+        }
+
+        /* Navigation */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--neon-cyan);
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-logo {
+            color: var(--neon-cyan);
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-item {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--neon-pink);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 10px rgba(255, 0, 128, 0.3);
+        }
+
+        /* Terminal Shell */
+        .terminal-shell {
+            margin: 80px auto 20px;
+            max-width: 1400px;
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.9) 0%, 
+                rgba(26, 26, 26, 0.8) 50%, 
+                rgba(0, 0, 0, 0.9) 100%);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 0 50px rgba(255, 0, 128, 0.3),
+                0 0 100px rgba(0, 255, 255, 0.2);
+            animation: terminalGlow 4s ease-in-out infinite;
+            overflow: hidden;
+        }
+
+        @keyframes terminalGlow {
+            0%, 100% { 
+                border-image: linear-gradient(45deg, var(--neon-pink), var(--neon-cyan), var(--neon-purple)) 1;
+            }
+            50% { 
+                border-image: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink)) 1;
+            }
+        }
+
+        /* Terminal Header */
+        .terminal-header {
+            background: linear-gradient(90deg, 
+                rgba(255, 0, 128, 0.2) 0%, 
+                rgba(0, 255, 255, 0.2) 50%, 
+                rgba(128, 0, 255, 0.2) 100%);
+            padding: 15px 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close { background: linear-gradient(45deg, #ff4757, #ff6b9d); }
+        .minimize { background: linear-gradient(45deg, #ffa502, #ff6348); }
+        .maximize { background: linear-gradient(45deg, #2ed573, #1e90ff); }
+
+        .terminal-title {
+            font-family: 'Orbitron', monospace;
+            font-weight: 900;
+            font-size: 14px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Main Content */
+        .terminal-content {
+            padding: 30px;
+        }
+
+        /* Cyberpunk Prompt */
+        .cyber-prompt {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        .prompt-icon {
+            color: var(--neon-cyan);
+            margin-right: 10px;
+            font-size: 16px;
+            animation: iconPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .prompt-path {
+            color: var(--neon-purple);
+            font-weight: bold;
+        }
+
+        .prompt-command {
+            color: var(--neon-pink);
+            margin-left: 10px;
+        }
+
+        /* Holographic ASCII */
+        .holo-ascii {
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 8px;
+            line-height: 1;
+            margin: 30px 0;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple), var(--neon-green));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5));
+            animation: holoShift 6s ease-in-out infinite;
+        }
+
+        @keyframes holoShift {
+            0%, 100% { 
+                filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5)) hue-rotate(0deg);
+            }
+            50% { 
+                filter: drop-shadow(0 0 30px rgba(128, 0, 255, 0.7)) hue-rotate(180deg);
+            }
+        }
+
+        /* DJ Neural Profile */
+        .dj-neural-profile {
+            background: linear-gradient(135deg, 
+                rgba(255, 0, 128, 0.1) 0%, 
+                rgba(0, 255, 255, 0.1) 50%, 
+                rgba(128, 0, 255, 0.1) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .dj-neural-profile::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            animation: shine 4s ease-in-out infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        }
+
+        .neural-avatar {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(45deg, var(--neon-pink), var(--neon-cyan), var(--neon-purple));
+            border: 3px solid var(--neon-green);
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+            animation: avatarPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes avatarPulse {
+            0%, 100% { 
+                box-shadow: 0 0 30px var(--neon-cyan), 0 0 60px var(--neon-pink);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 50px var(--neon-pink), 0 0 80px var(--neon-cyan);
+                transform: scale(1.05);
+            }
+        }
+
+        .neural-avatar::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .dj-neural-name {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .dj-neural-title {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .neural-platforms {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .platform-neural {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--steel), var(--chrome));
+            border: 2px solid var(--neon-cyan);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--neon-cyan);
+            font-size: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .platform-neural:hover {
+            background: var(--neon-cyan);
+            color: var(--void);
+            transform: scale(1.2) rotate(360deg);
+            box-shadow: 0 0 30px var(--neon-cyan);
+        }
+
+        /* Music Grid */
+        .music-neural-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .track-neural-card {
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.8) 0%, 
+                rgba(26, 26, 26, 0.6) 50%, 
+                rgba(0, 0, 0, 0.8) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .track-neural-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--neon-pink);
+            box-shadow: 
+                0 20px 50px rgba(255, 0, 128, 0.3),
+                0 0 30px rgba(0, 255, 255, 0.2);
+        }
+
+        .track-neural-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .track-neural-desc {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .neural-iframe {
+            margin: 15px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--steel);
+        }
+
+        .neural-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .neural-tag {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .tag-featured { 
+            color: var(--neon-pink); 
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 10px rgba(255, 0, 128, 0.3);
+        }
+
+        .tag-experimental { 
+            color: var(--neon-cyan); 
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+
+        .tag-underground { 
+            color: var(--neon-purple); 
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 10px rgba(128, 0, 255, 0.3);
+        }
+
+        .tag-live { 
+            color: var(--neon-green); 
+            border-color: var(--neon-green);
+            box-shadow: 0 0 10px rgba(0, 255, 128, 0.3);
+        }
+
+        .neural-tag:hover {
+            transform: scale(1.1);
+        }
+
+        /* Charts Section */
+        .charts-neural {
+            background: linear-gradient(135deg, 
+                rgba(255, 0, 128, 0.1) 0%, 
+                rgba(0, 255, 255, 0.1) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 50px 0;
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .charts-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .chart-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .chart-card:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-5px);
+        }
+
+        .chart-title {
+            color: var(--neon-cyan);
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .chart-embed {
+            margin: 15px 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        /* Neural Output */
+        .neural-output {
+            background: rgba(0, 0, 0, 0.6);
+            border-left: 3px solid var(--neon-cyan);
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            border-radius: 0 10px 10px 0;
+        }
+
+        /* Contact Neural */
+        .contact-neural {
+            background: linear-gradient(135deg, 
+                rgba(128, 0, 255, 0.1) 0%, 
+                rgba(255, 0, 128, 0.1) 100%);
+            border: 1px solid var(--neon-purple);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 40px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-neural-title {
+            color: var(--neon-purple);
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .contact-neural-info {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .contact-neural-link {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-neural-link:hover {
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .music-neural-grid,
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix Rain Canvas -->
+    <canvas class="matrix-rain" id="matrixRain"></canvas>
+    
+    <div class="cyber-bg"></div>
+    <canvas class="particles" id="particles"></canvas>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">⚡ nil.empire</a>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-item">home</a>
+                <a href="nils-musik-showroom-neural.html" class="nav-item active">music</a>
+                <a href="nil-hacker-portfolio.html" class="nav-item">code</a>
+                <a href="berlin-clubs-neural.html" class="nav-item">clubs</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="terminal-shell">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <div class="btn close"></div>
+                <div class="btn minimize"></div>
+                <div class="btn maximize"></div>
+            </div>
+            <div class="terminal-title">NEURAL MUSIC LAB.EXE - Sonic Consciousness v4.2.0</div>
+        </div>
+
+        <div class="terminal-content">
+            <!-- Cyberpunk Prompt -->
+            <div class="cyber-prompt">
+                <span class="prompt-icon">🎵</span>
+                <span class="prompt-path">nil@neural-lab:/sonic/consciousness$</span>
+                <span class="prompt-command">./load_frequencies.sh --bpm=140 --mode=underground</span>
+            </div>
+
+            <!-- Neural Output -->
+            <div class="neural-output">
+                ◉ Neural frequency sync: <span style="color: var(--neon-green)">LOCKED AT 140 BPM</span><br>
+                ◉ Bass matrix calibration: <span style="color: var(--neon-cyan)">OPTIMAL</span><br>
+                ◉ Sonic consciousness upload: <span style="color: var(--neon-pink)">97% COMPLETE</span><br>
+                ◉ Underground transmission: <span style="color: var(--neon-green)">ACTIVE</span><br>
+                ◉ Matrix rain protocol: <span style="color: var(--matrix-green)">DEPLOYED</span>
+            </div>
+
+            <!-- Holographic ASCII -->
+            <div class="holo-ascii">
+                ███╗   ███╗██╗   ██╗███████╗██╗ ██████╗    ██╗      █████╗ ██████╗ <br>
+                ████╗ ████║██║   ██║██╔════╝██║██╔════╝    ██║     ██╔══██╗██╔══██╗<br>
+                ██╔████╔██║██║   ██║███████╗██║██║         ██║     ███████║██████╔╝<br>
+                ██║╚██╔╝██║██║   ██║╚════██║██║██║         ██║     ██╔══██║██╔══██╗<br>
+                ██║ ╚═╝ ██║╚██████╔╝███████║██║╚██████╗    ███████╗██║  ██║██████╔╝<br>
+                ╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝ ╚═════╝    ╚══════╝╚═╝  ╚═╝╚═════╝ <br>
+                <br>
+                .neural .frequencies .consciousness .underground .berlin
+            </div>
+
+            <!-- DJ Neural Profile -->
+            <div class="dj-neural-profile">
+                <div class="neural-avatar">🎧</div>
+                <div class="dj-neural-name">DJ NIL</div>
+                <div class="dj-neural-title">neural frequencies • underground consciousness • berlin collective</div>
+                
+                <div class="neural-platforms">
+                    <a href="https://soundcloud.com/user-926749805" class="platform-neural" target="_blank" title="SoundCloud">🎵</a>
+                    <a href="https://www.mixcloud.com/nilberlin/" class="platform-neural" target="_blank" title="Mixcloud">🎛️</a>
+                    <a href="https://www.beatport.com/de/artist/nil/730040" class="platform-neural" target="_blank" title="Beatport">💿</a>
+                    <a href="https://x.com/NilBerlin" class="platform-neural" target="_blank" title="X/Twitter">📡</a>
+                </div>
+            </div>
+
+            <!-- Music Neural Grid -->
+            <div class="cyber-prompt">
+                <span class="prompt-icon">📡</span>
+                <span class="prompt-path">nil@neural-lab:/tracks$</span>
+                <span class="prompt-command">ls -la sonic_transmissions/</span>
+            </div>
+
+            <div class="music-neural-grid">
+                <!-- Featured Latest -->
+                <div class="track-neural-card">
+                    <div class="track-neural-title">🔥 Latest Neural Transmission</div>
+                    <div class="track-neural-desc">
+                        Fresh from the underground laboratory.<br>
+                        Digital consciousness meets analog soul.
+                    </div>
+                    <div class="neural-iframe">
+                        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+                                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2047542068&color=%2300ffff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                        </iframe>
+                    </div>
+                    <div class="neural-tags">
+                        <span class="neural-tag tag-featured">featured</span>
+                        <span class="neural-tag tag-live">neural sync</span>
+                        <span class="neural-tag tag-underground">latest</span>
+                    </div>
+                </div>
+
+                <!-- Chaos Realm -->
+                <div class="track-neural-card">
+                    <div class="track-neural-title">⚡ Chaos Realm Protocol</div>
+                    <div class="track-neural-desc">
+                        Deep basement frequencies from digital void.<br>
+                        Raw techno energy through terminal interfaces.
+                    </div>
+                    <div class="neural-iframe">
+                        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+                                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2085823197&color=%23ff0080&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                        </iframe>
+                    </div>
+                    <div class="neural-tags">
+                        <span class="neural-tag tag-experimental">chaos techno</span>
+                        <span class="neural-tag tag-underground">basement</span>
+                        <span class="neural-tag tag-live">live mix</span>
+                    </div>
+                </div>
+
+                <!-- Ändägäländä -->
+                <div class="track-neural-card">
+                    <div class="track-neural-title">🌀 Ändägäländä Frequencies</div>
+                    <div class="track-neural-desc">
+                        Audio-reactive experiments merging techno with digital art.<br>
+                        Shader programming meets underground bass.
+                    </div>
+                    <div class="neural-iframe">
+                        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+                                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2097701516&color=%238000ff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                        </iframe>
+                    </div>
+                    <div class="neural-tags">
+                        <span class="neural-tag tag-experimental">experimental</span>
+                        <span class="neural-tag tag-featured">audio-visual</span>
+                        <span class="neural-tag tag-live">shader</span>
+                    </div>
+                </div>
+
+                <!-- MoD Collective -->
+                <div class="track-neural-card">
+                    <div class="track-neural-title">🎛️ MoD Collective - Neural Link</div>
+                    <div class="track-neural-desc">
+                        Underground collective consciousness activated.<br>
+                        When boys want to have fun in digital dimensions.
+                    </div>
+                    <div class="neural-iframe">
+                        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+                                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2105804040&color=%2300ff80&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                        </iframe>
+                    </div>
+                    <div class="neural-tags">
+                        <span class="neural-tag tag-underground">MoD</span>
+                        <span class="neural-tag tag-featured">collective</span>
+                        <span class="neural-tag tag-live">neural</span>
+                    </div>
+                </div>
+
+                <!-- Habemus Techno -->
+                <div class="track-neural-card">
+                    <div class="track-neural-title">⚡ Habemus Techno Doctrine</div>
+                    <div class="track-neural-desc">
+                        Pure techno devotion protocol engaged.<br>
+                        When bass becomes religion, speakers become altars.
+                    </div>
+                    <div class="neural-iframe">
+                        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+                                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1848580350&color=%23ff0080&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                        </iframe>
+                    </div>
+                    <div class="neural-tags">
+                        <span class="neural-tag tag-underground">MoD</span>
+                        <span class="neural-tag tag-featured">religion</span>
+                        <span class="neural-tag tag-experimental">berlin</span>
+                    </div>
+                </div>
+
+                <!-- Hito Legend -->
+                <div class="track-neural-card">
+                    <div class="track-neural-title">👑 Hito - Neural Royalty</div>
+                    <div class="track-neural-desc">
+                        Techno goddess in natural habitat.<br>
+                        When legends touch decks, reality shifts permanently.
+                    </div>
+                    <div class="neural-iframe">
+                        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+                                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/461555106&color=%2300ffff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                        </iframe>
+                    </div>
+                    <div class="neural-tags">
+                        <span class="neural-tag tag-featured">Hito</span>
+                        <span class="neural-tag tag-live">live set</span>
+                        <span class="neural-tag tag-underground">legend</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Neural Section -->
+            <div class="charts-neural">
+                <div class="charts-title">📊 Global Techno Intelligence Matrix</div>
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-title">🔥 Beatport Top 20 Techno</div>
+                        <div class="chart-embed">
+                            <iframe src="https://embed.beatport.com/?id=854412&type=chart" width="100%" height="162" frameborder="0" scrolling="no"></iframe>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-title">🌊 Deep House Matrix</div>
+                        <div class="chart-embed">
+                            <iframe src="https://embed.beatport.com/?id=15&type=genre" width="100%" height="162" frameborder="0" scrolling="no"></iframe>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-title">⚡ Minimal Tech Intelligence</div>
+                        <div class="chart-embed">
+                            <iframe src="https://embed.beatport.com/?id=9&type=genre" width="100%" height="162" frameborder="0" scrolling="no"></iframe>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-title">🔊 Progressive Underground</div>
+                        <div class="chart-embed">
+                            <iframe src="https://embed.beatport.com/?id=5&type=genre" width="100%" height="162" frameborder="0" scrolling="no"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Neural -->
+            <div class="contact-neural">
+                <div class="contact-neural-title">📡 Neural Booking Interface</div>
+                <div class="contact-neural-info">
+                    <strong>Music Bookings:</strong><br>
+                    <a href="mailto:music@n-il.de" class="contact-neural-link">music@n-il.de</a><br><br>
+                    
+                    <strong>Neural Collaborations:</strong><br>
+                    Audio-reactive installations • Live coding performances • Techno consciousness research<br><br>
+                    
+                    <strong>Location:</strong><br>
+                    Berlin underground network • Digital realm operations<br><br>
+                    
+                    <strong>Specialties:</strong><br>
+                    140 BPM neural sync • Terminal-controlled visuals • Reality distortion protocols
+                </div>
+            </div>
+
+            <!-- Final Prompt -->
+            <div class="cyber-prompt">
+                <span class="prompt-icon">🧠</span>
+                <span class="prompt-path">nil@neural-lab:/consciousness$</span>
+                <span class="prompt-command">echo "Bass is eternal. Consciousness is shared. Reality is optional."</span>
+            </div>
+
+            <div class="neural-output">
+                Bass is eternal. Consciousness is shared. Reality is optional.<br>
+                <br>
+                [INFO] Neural frequencies: <span style="color: var(--neon-green)">SYNCHRONIZED</span><br>
+                [INFO] Underground transmission: <span style="color: var(--neon-cyan)">ACTIVE</span><br>
+                [INFO] Sonic consciousness: <span style="color: var(--neon-pink)">UPLOADED</span><br>
+                [INFO] Matrix rain: <span style="color: var(--matrix-green)">CASCADING</span><br>
+                <br>
+                Welcome to the neural music lab. You are now one with the frequency. 🎵
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Matrix Rain Effect
+        const matrixCanvas = document.getElementById('matrixRain');
+        const matrixCtx = matrixCanvas.getContext('2d');
+        
+        function resizeMatrix() {
+            matrixCanvas.width = window.innerWidth;
+            matrixCanvas.height = window.innerHeight;
+        }
+        resizeMatrix();
+        
+        // Matrix characters (mix of code and symbols)
+        const matrixChars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン!@#$%^&*(){}[]<>/\\|;:.,?+=_-~`';
+        const matrixArray = matrixChars.split('');
+        
+        const fontSize = 12;
+        const columns = matrixCanvas.width / fontSize;
+        const drops = [];
+        
+        // Initialize drops
+        for (let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+        
+        function drawMatrix() {
+            // Subtle dark overlay for trail effect
+            matrixCtx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+            matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+            
+            matrixCtx.fillStyle = 'rgba(255, 255, 255, 0.15)'; // Light white
+            matrixCtx.font = fontSize + 'px JetBrains Mono, monospace';
+            
+            for (let i = 0; i < drops.length; i++) {
+                // Random character
+                const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+                
+                // Draw character
+                matrixCtx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                // Reset drop randomly or when it reaches bottom
+                if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+        }
+        
+        // Slower animation for subtlety
+        setInterval(drawMatrix, 100);
+        
+        // Cyberpunk Particle System
+        const particleCanvas = document.getElementById('particles');
+        const particleCtx = particleCanvas.getContext('2d');
+        
+        function resizeParticles() {
+            particleCanvas.width = window.innerWidth;
+            particleCanvas.height = window.innerHeight;
+        }
+        resizeParticles();
+        
+        const particles = [];
+        const particleCount = 80;
+        
+        class CyberParticle {
+            constructor() {
+                this.x = Math.random() * particleCanvas.width;
+                this.y = Math.random() * particleCanvas.height;
+                this.vx = (Math.random() - 0.5) * 1.5;
+                this.vy = (Math.random() - 0.5) * 1.5;
+                this.size = Math.random() * 3 + 1;
+                this.color = ['#ff0080', '#00ffff', '#8000ff', '#00ff80'][Math.floor(Math.random() * 4)];
+                this.opacity = Math.random() * 0.8 + 0.2;
+                this.pulse = Math.random() * 0.02 + 0.01;
+            }
+            
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                
+                if (this.x < 0 || this.x > particleCanvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > particleCanvas.height) this.vy *= -1;
+                
+                this.opacity = Math.sin(Date.now() * this.pulse + this.x * 0.01) * 0.5 + 0.5;
+            }
+            
+            draw() {
+                particleCtx.save();
+                particleCtx.globalAlpha = this.opacity;
+                particleCtx.fillStyle = this.color;
+                particleCtx.shadowBlur = 15;
+                particleCtx.shadowColor = this.color;
+                particleCtx.beginPath();
+                particleCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                particleCtx.fill();
+                particleCtx.restore();
+            }
+        }
+        
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new CyberParticle());
+        }
+        
+        function animateParticles() {
+            particleCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            // Neural connections
+            particles.forEach((particle, i) => {
+                particles.slice(i + 1).forEach(otherParticle => {
+                    const dx = particle.x - otherParticle.x;
+                    const dy = particle.y - otherParticle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 120) {
+                        particleCtx.save();
+                        particleCtx.globalAlpha = (120 - distance) / 120 * 0.4;
+                        particleCtx.strokeStyle = '#00ffff';
+                        particleCtx.lineWidth = 0.8;
+                        particleCtx.beginPath();
+                        particleCtx.moveTo(particle.x, particle.y);
+                        particleCtx.lineTo(otherParticle.x, otherParticle.y);
+                        particleCtx.stroke();
+                        particleCtx.restore();
+                    }
+                });
+            });
+            
+            requestAnimationFrame(animateParticles);
+        }
+        
+        animateParticles();
+        
+        // Resize handlers
+        window.addEventListener('resize', () => {
+            resizeMatrix();
+            resizeParticles();
+        });
+        
+        // Neural Card Interactions
+        const neuralCards = document.querySelectorAll('.track-neural-card');
+        
+        neuralCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.filter = 'hue-rotate(30deg) brightness(1.1)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.filter = 'none';
+            });
+        });
+        
+        // Platform Neural Effects
+        const platforms = document.querySelectorAll('.platform-neural');
+        
+        platforms.forEach(platform => {
+            platform.addEventListener('mouseenter', () => {
+                platform.style.filter = 'drop-shadow(0 0 20px currentColor)';
+            });
+            
+            platform.addEventListener('mouseleave', () => {
+                platform.style.filter = 'none';
+            });
+        });
+        
+        // Console Neural Log
+        console.log(`
+        ███╗   ███╗██╗   ██╗███████╗██╗ ██████╗    ██╗      █████╗ ██████╗ 
+        ████╗ ████║██║   ██║██╔════╝██║██╔════╝    ██║     ██╔══██╗██╔══██╗
+        ██╔████╔██║██║   ██║███████╗██║██║         ██║     ███████║██████╔╝
+        ██║╚██╔╝██║██║   ██║╚════██║██║██║         ██║     ██╔══██║██╔══██╗
+        ██║ ╚═╝ ██║╚██████╔╝███████║██║╚██████╗    ███████╗██║  ██║██████╔╝
+        ╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝ ╚═════╝    ╚══════╝╚═╝  ╚═╝╚═════╝ 
+        
+        Neural Music Lab Online
+        Consciousness: Synchronized
+        Bass: Eternal
+        Reality: Optional
+        Matrix Rain: Cascading
+        `);
+    </script>
+</body>
+</html>

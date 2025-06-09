@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nil • techno lab • berlin underground</title>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NRZ256XRGF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NRZ256XRGF');
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #D7F205;
+            --secondary-green: #EAF205;
+            --dark-green: #888C0D;
+            --bg-dark: #262223;
+            --bg-secondary: #3a3637;
+            --light-text: #F2F2F2;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-dark);
+            color: var(--light-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--primary-green);
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-green);
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-item {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--primary-green);
+            background: rgba(215, 242, 5, 0.1);
+        }
+
+        /* Matrix Rain */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* Terminal Container */
+        .terminal-container {
+            max-width: 1000px;
+            margin: 80px auto 20px;
+            background: rgba(38, 34, 35, 0.9);
+            border: 2px solid var(--primary-green);
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(215, 242, 5, 0.3);
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .close { background: #ff5f56; }
+        .minimize { background: #ffbd2e; }
+        .maximize { background: #27ca3f; }
+
+        .terminal-title {
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .terminal-content {
+            padding: 30px;
+        }
+
+        .prompt {
+            color: var(--primary-green);
+            margin-bottom: 20px;
+        }
+
+        .command {
+            color: var(--light-text);
+        }
+
+        .ascii-art {
+            color: var(--primary-green);
+            font-size: 11px;
+            line-height: 1.2;
+            margin: 20px 0;
+            text-align: center;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px var(--primary-green); }
+            to { text-shadow: 0 0 25px var(--primary-green); }
+        }
+
+        .output {
+            color: var(--light-text);
+            margin: 20px 0;
+            font-size: 12px;
+        }
+
+        /* DJ Profile */
+        .dj-profile {
+            background: linear-gradient(135deg, var(--bg-dark), #3a3637);
+            border: 2px solid var(--primary-green);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dj-profile::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(215, 242, 5, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.5; }
+            50% { transform: scale(1.1) rotate(180deg); opacity: 0.8; }
+        }
+
+        .dj-avatar {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(45deg, var(--dark-green), var(--primary-green));
+            border: 4px solid var(--secondary-green);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            box-shadow: 
+                0 0 40px rgba(215, 242, 5, 0.6),
+                inset 0 0 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .dj-avatar::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(215, 242, 5, 0.4), transparent);
+            animation: spin 2s linear infinite;
+        }
+
+        .dj-avatar::after {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .dj-name {
+            color: var(--primary-green);
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(215, 242, 5, 0.5);
+            z-index: 2;
+            position: relative;
+        }
+
+        .dj-title {
+            color: var(--light-text);
+            font-size: 16px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            z-index: 2;
+            position: relative;
+        }
+
+        .platform-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            z-index: 2;
+            position: relative;
+        }
+
+        .platform-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--dark-green), var(--secondary-green));
+            border: 2px solid var(--primary-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--primary-green);
+            font-size: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .platform-icon:hover {
+            background: var(--primary-green);
+            color: var(--bg-dark);
+            transform: scale(1.2) rotate(360deg);
+            box-shadow: 0 0 30px rgba(215, 242, 5, 0.8);
+        }
+
+        .platform-icon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .platform-icon:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* Featured Track */
+        .featured-section {
+            background: linear-gradient(135deg, var(--bg-dark), var(--bg-secondary));
+            border: 2px solid var(--primary-green);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(215, 242, 5, 0.1), transparent);
+            animation: scan 3s ease-in-out infinite;
+        }
+
+        @keyframes scan {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .featured-title {
+            color: var(--primary-green);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(215, 242, 5, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        .featured-title::before {
+            content: '▶';
+            animation: blink 1.5s infinite;
+            margin-right: 10px;
+        }
+
+        /* Track Grid Enhanced */
+        .sets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .set-card {
+            background: linear-gradient(145deg, var(--bg-dark), var(--bg-secondary));
+            border: 1px solid var(--dark-green);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .set-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-green), var(--secondary-green));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .set-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(215, 242, 5, 0.2);
+            border-color: var(--primary-green);
+        }
+
+        .set-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .set-title {
+            color: var(--primary-green);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .set-desc {
+            color: var(--light-text);
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .set-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .tag {
+            background: linear-gradient(45deg, var(--dark-green), var(--primary-green));
+            color: var(--bg-dark);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .tag:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(215, 242, 5, 0.4);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: #6A1B9A;
+            border: 1px solid #8B5A96;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .contact-title {
+            color: var(--primary-purple);
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .contact-info {
+            color: #BA68C8;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .contact-link {
+            color: var(--primary-purple);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            text-shadow: 0 0 5px rgba(224, 102, 255, 0.5);
+        }
+
+        .back-link {
+            background: #8B5A96;
+            color: var(--primary-purple);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: 1px solid var(--primary-purple);
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin: 20px 0;
+            font-size: 12px;
+        }
+
+        .back-link:hover {
+            background: var(--primary-purple);
+            color: var(--bg-dark);
+        }
+
+        .cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Visitor Counter */
+        .visitor-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(13, 13, 13, 0.9);
+            border: 1px solid var(--primary-purple);
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            color: var(--primary-purple);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <canvas class="matrix-bg" id="matrix"></canvas>
+    
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span>⚡</span>
+                <span>nil.empire</span>
+            </a>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-item">home</a>
+                <a href="nils-musik-showroom.html" class="nav-item active">music</a>
+                <a href="nil-hacker-portfolio.html" class="nav-item">code</a>
+                <a href="berlin-clubs.html" class="nav-item">clubs</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <div class="btn close"></div>
+                <div class="btn minimize"></div>
+                <div class="btn maximize"></div>
+            </div>
+            <div class="terminal-title">nil@techno-lab: ~/beats_and_frequencies</div>
+        </div>
+        
+        <div class="terminal-content">
+            <div class="prompt">┌─[dj@underground-lab]─[~/techno_transmission]</div>
+            <div class="prompt">└──╼ $ <span class="command">play ./beats --frequency=140bpm --location=berlin</span></div>
+            
+            <div class="ascii-art">
+♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫
+███╗   ███╗██╗   ██╗███████╗██╗██╗  ██╗
+████╗ ████║██║   ██║██╔════╝██║██║ ██╔╝
+██╔████╔██║██║   ██║███████╗██║█████╔╝ 
+██║╚██╔╝██║██║   ██║╚════██║██║██╔═██╗ 
+██║ ╚═╝ ██║╚██████╔╝███████║██║██║  ██╗
+╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝╚═╝  ╚═╝
+           techno lab • berlin underground
+♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫ ♪ ♫
+            </div>
+
+            <div class="output">
+                [INFO] techno lab initialized<br>
+                [INFO] underground frequencies loaded<br>
+                [INFO] bass enhancement: ACTIVE<br>
+                [INFO] 140 bpm synchronization: OPTIMAL<br>
+                [INFO] berlin connection: ESTABLISHED
+            </div>
+
+            <div class="dj-profile">
+                <div class="dj-avatar">🎧</div>
+                <div class="dj-name">DJ NIL</div>
+                <div class="dj-title">underground techno • berlin collective • digital architect</div>
+                
+                <div class="platform-links">
+                    <a href="https://soundcloud.com/user-926749805" class="platform-icon" target="_blank" title="SoundCloud">🎵</a>
+                    <a href="https://www.mixcloud.com/nilberlin/" class="platform-icon" target="_blank" title="Mixcloud">🎛️</a>
+                    <a href="https://www.beatport.com/de/artist/nil/730040" class="platform-icon" target="_blank" title="Beatport">💿</a>
+                    <a href="https://x.com/NilBerlin" class="platform-icon" target="_blank" title="X/Twitter">📡</a>
+                </div>
+            </div>
+
+            <!-- Featured Track -->
+            <div class="featured-section">
+                <div class="featured-title">🔥 latest transmission</div>
+                <div style="margin: 15px 0; border-radius: 8px; overflow: hidden; border: 1px solid #8B5A96;">
+                    <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+                            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2047542068&color=%23E066FF&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                    </iframe>
+                </div>
+            </div>
+            
+            <div class="sets-grid">
+                <div class="set-card">
+                    <div class="set-title">🔥 chaos realm</div>
+                    <div class="set-desc">
+                        deep basement vibes from the digital underground.<br>
+                        raw techno energy captured through terminal interfaces.
+                    </div>
+                    <div style="margin: 15px 0; border-radius: 8px; overflow: hidden; border: 1px solid #8B5A96;">
+                        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+                                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2085823197&color=%23E066FF&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                        </iframe>
+                    </div>
+                    <div class="set-tags">
+                        <span class="tag">chaos techno</span>
+                        <span class="tag">basement</span>
+                        <span class="tag">live mix</span>
+                    </div>
+                </div>
+
+                <div class="set-card">
+                    <div class="set-title">⚡ ändägäländä</div>
+                    <div class="set-desc">
+                        audio-reactive experiments merging techno with digital art.<br>
+                        shader programming meets underground frequencies.
+                    </div>
+                    <div style="margin: 15px 0; border-radius: 8px; overflow: hidden; border: 1px solid #8B5A96;">
+                        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+                                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2097701516&color=%23E066FF&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                        </iframe>
+                    </div>
+                    <div class="set-tags">
+                        <span class="tag">experimental</span>
+                        <span class="tag">audio-visual</span>
+                        <span class="tag">shader</span>
+                    </div>
+                </div>
+
+                <div class="set-card">
+                    <div class="set-title">💎 nil originals</div>
+                    <div class="set-desc">
+                        original productions from the berlin underground.<br>
+                        available on beatport for professional bookings.
+                    </div>
+                    <div style="margin: 15px 0; border-radius: 8px; overflow: hidden; border: 1px solid #8B5A96;">
+                        <iframe src="https://embed.beatport.com/?id=854412&type=chart" width="100%" height="162" frameborder="0" scrolling="no" style="max-width:600px;"></iframe>
+                    </div>
+                    <div class="set-tags">
+                        <span class="tag">original</span>
+                        <span class="tag">beatport</span>
+                        <span class="tag">commercial</span>
+                    </div>
+                </div>
+
+                <div class="set-card">
+                    <div class="set-title">🎛️ MoD - boys just want fun</div>
+                    <div class="set-desc">
+                        underground collective vibes • sonic experiments.<br>
+                        raw energy from the digital basement labs.
+                    </div>
+                    <div style="margin: 15px 0; border-radius: 8px; overflow: hidden; border: 1px solid #8B5A96;">
+                        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+                                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2105804040&color=%23E066FF&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                        </iframe>
+                    </div>
+                    <div class="set-tags">
+                        <span class="tag">MoD</span>
+                        <span class="tag">underground</span>
+                        <span class="tag">collective</span>
+                    </div>
+                </div>
+
+                <div class="set-card">
+                    <div class="set-title">⚡ MoD - habemus techno</div>
+                    <div class="set-desc">
+                        pure techno devotion • berlin spirit distilled.<br>
+                        when bass becomes religion, speakers become altars.
+                    </div>
+                    <div style="margin: 15px 0; border-radius: 8px; overflow: hidden; border: 1px solid #8B5A96;">
+                        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+                                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1848580350&color=%23E066FF&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                        </iframe>
+                    </div>
+                    <div class="set-tags">
+                        <span class="tag">MoD</span>
+                        <span class="tag">techno religion</span>
+                        <span class="tag">berlin</span>
+                    </div>
+                </div>
+
+                <div class="set-card">
+                    <div class="set-title">🔥 Hito - fuse anniversary</div>
+                    <div class="set-desc">
+                        legend at work • lisbon club magic captured.<br>
+                        when techno royalty touches the decks, reality shifts.
+                    </div>
+                    <div style="margin: 15px 0; border-radius: 8px; overflow: hidden; border: 1px solid #8B5A96;">
+                        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+                                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/461555106&color=%23E066FF&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+                        </iframe>
+                    </div>
+                    <div class="set-tags">
+                        <span class="tag">Hito</span>
+                        <span class="tag">live set</span>
+                        <span class="tag">legend</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-section">
+                <div class="contact-title">📡 booking & collaboration</div>
+                <div class="contact-info">
+                    <strong>music bookings:</strong><br>
+                    <a href="mailto:music@n-il.de" class="contact-link">music@n-il.de</a><br><br>
+                    
+                    <strong>collaboration requests:</strong><br>
+                    audio-reactive installations • techno production • live coding performances<br><br>
+                    
+                    <strong>location:</strong><br>
+                    berlin underground scene • digital realm operations<br><br>
+                    
+                    <strong>booking info:</strong><br>
+                    available for: club sets • festival performances • audio-visual installations<br>
+                    specialties: 140 bpm techno • live coding • terminal-controlled visuals
+                </div>
+            </div>
+
+            <a href="index.html" class="back-link">← back to underground lab</a>
+
+            <div class="prompt">└──╼ $ <span class="command">echo "keep the bass heavy and the code clean..."</span></div>
+            <div class="output">
+                [INFO] techno lab operational<br>
+                [INFO] all frequencies synchronized<br>
+                [INFO] bass levels: CRITICAL<br>
+                [INFO] ready for transmission
+            </div>
+
+            <div class="prompt">└──╼ $ <span class="cursor">█</span></div>
+        </div>
+    </div>
+
+    <!-- Visitor Counter -->
+    <div class="visitor-counter">
+        👥 visitors: <span id="visitor-count">loading...</span>
+    </div>
+
+    <script>
+        // Purple Matrix Rain Effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const symbols = '🎵🎶🎧🎤🔊💿🎛️⚡🌊♪♫♬♩♭♮♯🎸🥁🎹📻💾🔥⭐✨🎆🎇140NILBERLIN';
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトホモヨョロヲゴゾドボポヴッン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        const alphabet = symbols + katakana + latin;
+
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const rainDrops = [];
+
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = 1;
+        }
+
+        const draw = () => {
+            ctx.fillStyle = 'rgba(13, 13, 13, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Neon green matrix colors
+            const colors = ['#D7F205', '#EAF205', '#888C0D', '#A6B50D'];
+            const colorIndex = Math.floor(Math.random() * colors.length);
+            ctx.fillStyle = colors[colorIndex];
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+
+        setInterval(draw, 40);
+
+        // Visitor Counter (Safe fallback)
+        function updateVisitorCount() {
+            try {
+                let visits = localStorage.getItem('nil-music-visits') || 0;
+                visits = parseInt(visits) + 1;
+                localStorage.setItem('nil-music-visits', visits);
+                document.getElementById('visitor-count').textContent = visits;
+            } catch (e) {
+                // Fallback for sandboxed environments (GitHub Pages)
+                document.getElementById('visitor-count').textContent = Math.floor(Math.random() * 1000) + 100;
+            }
+        }
+
+        window.addEventListener('load', updateVisitorCount);
+
+        // Window resize handler
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>

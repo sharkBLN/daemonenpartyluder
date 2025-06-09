@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFTER-AUA • Digital Hangover Chamber</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: radial-gradient(circle at 30% 70%, #1a0a1a 0%, #0D0D0D 50%, #2a1a0a 100%);
+            color: #F2F2F2;
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .neural-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(45deg, #ff006e11, #8338ec11, #00ff8811);
+            animation: neural-hangover 12s ease-in-out infinite;
+        }
+
+        @keyframes neural-hangover {
+            0%, 100% { opacity: 0.1; transform: scale(1); }
+            33% { opacity: 0.2; transform: scale(1.02); }
+            66% { opacity: 0.15; transform: scale(0.98); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff006e, #8338ec, #00ff88, #ff6b9d);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: chaos-glow 4s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes chaos-glow {
+            0%, 100% { 
+                background-position: 0% 50%; 
+                filter: drop-shadow(0 0 5px #ff006e44); 
+            }
+            25% { 
+                background-position: 25% 50%; 
+                filter: drop-shadow(0 0 15px #8338ec66); 
+            }
+            50% { 
+                background-position: 50% 50%; 
+                filter: drop-shadow(0 0 10px #00ff8844); 
+            }
+            75% { 
+                background-position: 75% 50%; 
+                filter: drop-shadow(0 0 20px #ff6b9d55); 
+            }
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #8C8C8C;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .chaos-description {
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 12px;
+            color: #8C8C8C;
+            text-align: center;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #F2F2F2;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: bold;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .control-btn:hover::before {
+            left: 100%;
+        }
+
+        .control-btn:hover {
+            background: linear-gradient(45deg, #ff006e22, #8338ec22);
+            border-color: #ff006e;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 0, 110, 0.2);
+        }
+
+        .chaos-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: #ff006e;
+            transform: scale(1.05);
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff006e;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: #8C8C8C;
+            text-transform: uppercase;
+        }
+
+        .aua-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .aua-post {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.6s ease;
+            overflow: hidden;
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px) rotateX(10deg); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) rotateX(0); 
+            }
+        }
+
+        .aua-post::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff006e, #8338ec, #00ff88);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .aua-post:hover::before {
+            transform: scaleX(1);
+        }
+
+        .aua-post:hover {
+            transform: translateY(-8px) rotateX(2deg);
+            border-color: rgba(255, 0, 110, 0.4);
+            box-shadow: 0 20px 40px rgba(255, 0, 110, 0.15);
+        }
+
+        .aua-user {
+            font-size: 11px;
+            color: #ff006e;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-emoji {
+            font-size: 14px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .aua-content {
+            font-size: 13px;
+            color: #F2F2F2;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            word-wrap: break-word;
+        }
+
+        .aua-translation {
+            font-size: 11px;
+            color: #00ff88;
+            font-style: italic;
+            margin-bottom: 10px;
+            opacity: 0.9;
+            padding: 8px;
+            background: rgba(0, 255, 136, 0.05);
+            border-radius: 8px;
+            border-left: 2px solid #00ff88;
+        }
+
+        .aua-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+        }
+
+        .aua-time {
+            font-size: 9px;
+            color: #595959;
+        }
+
+        .aua-type {
+            font-size: 8px;
+            color: #8338ec;
+            background: rgba(131, 56, 236, 0.1);
+            padding: 2px 6px;
+            border-radius: 10px;
+            text-transform: uppercase;
+        }
+
+        /* Post type variations */
+        .aua-post.poetry {
+            background: linear-gradient(135deg, rgba(131, 56, 236, 0.15), rgba(0, 0, 0, 0.6));
+            border-color: #8338ec;
+        }
+
+        .aua-post.gossip {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(0, 0, 0, 0.6));
+            border-color: #ffd700;
+        }
+
+        .aua-post.deep {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 0, 0, 0.6));
+            border-color: #00ff88;
+        }
+
+        .aua-post.chaos {
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.15), rgba(131, 56, 236, 0.15));
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+            animation: shake 0.5s infinite, fadeInUp 0.6s ease;
+        }
+
+        .aua-post.multilang {
+            border-left: 4px solid #00ff88;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(-1px) translateY(-1px); }
+            75% { transform: translateX(1px) translateY(1px); }
+        }
+
+        .floating-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .float-btn {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #F2F2F2;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .float-btn:hover {
+            background: #ff006e;
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 25px rgba(255, 0, 110, 0.3);
+        }
+
+        .chaos-ticker {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, #ff006e, #8338ec, #00ff88, #ff6b9d);
+            color: white;
+            padding: 8px 0;
+            overflow: hidden;
+            z-index: 999;
+        }
+
+        .ticker-content {
+            display: flex;
+            white-space: nowrap;
+            animation: scroll-chaos 40s linear infinite;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        @keyframes scroll-chaos {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .aua-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .floating-controls {
+                position: static;
+                flex-direction: row;
+                justify-content: center;
+                margin: 20px 0;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+        }
+
+        /* Glitch effects for ultimate chaos */
+        .glitch {
+            animation: glitch-chaos 3s infinite;
+        }
+
+        @keyframes glitch-chaos {
+            0%, 100% { 
+                text-shadow: 0 0 5px #ff006e; 
+                transform: translateX(0);
+            }
+            20% { 
+                text-shadow: -2px 0 #ff006e, 2px 0 #8338ec; 
+                transform: translateX(-2px);
+            }
+            40% { 
+                text-shadow: 2px 0 #ff006e, -2px 0 #00ff88; 
+                transform: translateX(2px);
+            }
+            60% { 
+                text-shadow: 0 2px #8338ec, 0 -2px #ff006e; 
+                transform: translateX(0);
+            }
+            80% { 
+                text-shadow: -1px 1px #00ff88, 1px -1px #ff006e; 
+                transform: translateX(-1px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="neural-bg"></div>
+    
+    <div class="floating-controls">
+        <div class="float-btn" title="Add Chaos" onclick="generateRandomPost()">🎭</div>
+        <div class="float-btn" title="Your Message" onclick="addUserPost()">💬</div>
+        <div class="float-btn" title="Language Toggle" onclick="toggleLanguages()">🌍</div>
+        <div class="float-btn" title="Chaos Level" onclick="increaseChaos()">⚡</div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo glitch">AFTER-AUA</div>
+            <div class="subtitle">Digital Hangover Chamber • v2.0</div>
+            <div class="chaos-description">
+                Virtueller Nebenraum nach legendärer Clubnacht – halb Wohnzimmer, halb Beichtstuhl, halb Irrenhaus.<br>
+                (Mathe? Egal!) Anonymous souls dropping club wisdom, love letters to DJs, and existential crises in multiple languages.
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="generateRandomPost()">🔄 RELOAD CHAOS</button>
+            <button class="control-btn" onclick="filterByType('all')">🌀 ALL SOULS</button>
+            <button class="control-btn" onclick="filterByType('poetry')">🎭 POETRY</button>
+            <button class="control-btn" onclick="filterByType('gossip')">👄 GOSSIP</button>
+            <button class="control-btn" onclick="filterByType('deep')">🧠 DEEP SHIT</button>
+            <button class="control-btn" onclick="clearAll()">💥 RESET VOID</button>
+        </div>
+
+        <div class="chaos-stats">
+            <div class="stat-card">
+                <div class="stat-value" id="totalSouls">23</div>
+                <div class="stat-label">Lost Souls</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="chaosLevel">87%</div>
+                <div class="stat-label">Chaos Level</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="languageCount">8</div>
+                <div class="stat-label">Languages</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="auaTime">4:20</div>
+                <div class="stat-label">AUA Time</div>
+            </div>
+        </div>
+
+        <div class="aua-grid" id="auaGrid">
+            <!-- Posts will be generated here -->
+        </div>
+    </div>
+
+    <div class="chaos-ticker">
+        <div class="ticker-content" id="chaosTickerContent">
+            🎭 AFTER-AUA STATUS: Active • 🌍 Languages: 8 detected • 🎵 Souls lost in bass: ∞ • 💫 Reality coherence: 12% • 🔥 Chaos probability: Maximum • ⚡ Next confession loading... • 
+        </div>
+    </div>
+
+    <script>
+        // AUA Post Engine
+        let multilingualMode = true;
+        let chaosLevel = 1;
+        let totalPosts = 0;
+        let activeFilter = 'all';
+
+        const auaUsernames = [
+            { name: '@acid_dad69', emoji: '🧪' },
+            { name: '@sunrise_lotte', emoji: '🌅' },
+            { name: '@mystic_tea', emoji: '🔮' },
+            { name: '@tresor_türk', emoji: '🏛️' },
+            { name: '@wasted_julia', emoji: '💫' },
+            { name: '@poetico', emoji: '📝' },
+            { name: '@ghostinthetoilet', emoji: '👻' },
+            { name: '@club_mama', emoji: '👑' },
+            { name: '@tekila_berta', emoji: '🍹' },
+            { name: '@soviet_disco', emoji: '🚩' },
+            { name: '@deepbass', emoji: '🎵' },
+            { name: '@floortester', emoji: '🕳️' },
+            { name: '@divine_polly', emoji: '✨' },
+            { name: '@alien_clubber', emoji: '👽' },
+            { name: '@la_dolce_beats', emoji: '💖' },
+            { name: '@sadboy2001', emoji: '😭' },
+            { name: '@random_spaniard', emoji: '🇪🇸' },
+            { name: '@blaues_wunder', emoji: '💙' },
+            { name: '@wifi_oracle', emoji: '📶' },
+            { name: '@bass_hunter', emoji: '🎯' },
+            { name: '@latex_legend', emoji: '🖤' },
+            { name: '@void_dancer', emoji: '🌙' },
+            { name: '@shadow_seeker', emoji: '👁️' },
+            { name: '@techno_ivan', emoji: '🤖' },
+            { name: '@rave_prophet', emoji: '🔥' },
+            { name: '@neon_ninja', emoji: '⚡' },
+            { name: '@disco_witch', emoji: '🧙‍♀️' },
+            { name: '@berlin_ghost', emoji: '🏙️' },
+            { name: '@sunday_sinner', emoji: '😈' },
+            { name: '@cosmic_dancer', emoji: '🌌' }
+        ];
+
+        const auaPostsGerman = [
+            'Reminder: Der Boden klebt nicht, du bist nur Teil der Club-Symbiose geworden.',
+            'Wer hat meine Realität gesehen? War noch da, als ich reingegangen bin.',
+            'Hab gerade gemerkt, dass ich seit 3 Stunden mit einem Pfosten rede. War aber ein gutes Gespräch.',
+            'Club-Klo-Weisheit: Wenn du die Graffiti verstehst, warst du lange genug da.',
+            'Meine Nachbarn denken, ich bin Vampir. Stimmt auch irgendwie.',
+            'Der DJ spielt meine Seele. Oder ich höre nur noch Bass.',
+            'Berlin: Wo 14 Uhr noch als Frühaufsteher gilt.',
+            'Heute Motto: Wenn es keine Nebelmaschine gibt, bin ich nicht interessiert.',
+            'Fun Fact: Meine Spotify Jahresstatistik ist einfach nur 140 BPM.',
+            'Wer braucht Kaffee wenn man Bass im Blut hat?',
+            'Ich glaube, meine Seele tanzt noch irgendwo in der Panorama Bar.',
+            'Status Update: Physisch anwesend, geistig noch im Darkroom.',
+            'Hat jemand meine Würde gesehen? Letzte Sichtung: Smoking Area, 6:32 Uhr.',
+            'Berghain-Türsteher sind eigentlich Psychologen mit Sicherheitsdienst-Lizenz.',
+            'Mein Herz schlägt im 4/4-Takt. Ist das normal?'
+        ];
+
+        const auaPostsEnglish = [
+            'Lost: My sense of time. Found: The meaning of bass.',
+            'If a tree falls in the forest and no one hears it, was the sound system loud enough?',
+            'Currently accepting applications for someone to carry me home.',
+            'My spirit animal is a strobe light.',
+            'Warning: May contain traces of glitter and existential crisis.',
+            'Relationship status: In love with this bassline.',
+            'Life hack: Everything sounds better at 3am in a basement.',
+            'Professional dancer, amateur human.',
+            'My therapist: "Tell me about your week." Me: "140 BPM."',
+            'Currently running on techno and optimism.',
+            'PSA: If you can still feel your feet, the music isn\'t loud enough.',
+            'Breaking: Local person achieves nirvana through repetitive beats.',
+            'Weather report: 100% chance of bass with scattered euphoria.',
+            'Market update: Emotional stability down 90%, spiritual awakening up 420%.',
+            'Philosophy question: If everyone is weird, is anyone really weird?'
+        ];
+
+        const auaPostsMultilang = [
+            {
+                content: 'Je cherche mon âme... je pense qu\'elle danse encore quelque part dans le Tresor.',
+                translation: '(Looking for my soul... I think it\'s still dancing somewhere in Tresor.)',
+                lang: 'French'
+            },
+            {
+                content: 'Мой внутренний голос говорит только на языке техно.',
+                translation: '(My inner voice only speaks techno language.)',
+                lang: 'Russian'
+            },
+            {
+                content: 'Esta vida es demasiado corta para música sin alma.',
+                translation: '(Life is too short for soulless music.)',
+                lang: 'Spanish'
+            },
+            {
+                content: 'Bu gece ruhum techno ile evlendi, kardeşim!',
+                translation: '(Tonight my soul married techno, brother!)',
+                lang: 'Turkish'
+            },
+            {
+                content: 'Moja dusza tańczy nawet gdy śpię.',
+                translation: '(My soul dances even when I sleep.)',
+                lang: 'Polish'
+            },
+            {
+                content: 'Il mio cuore batte a 140 BPM, sempre.',
+                translation: '(My heart beats at 140 BPM, always.)',
+                lang: 'Italian'
+            },
+            {
+                content: 'Dans mon rêve, je suis un synthétiseur Moog.',
+                translation: '(In my dreams, I am a Moog synthesizer.)',
+                lang: 'French'
+            },
+            {
+                content: 'Я нашёл себя в подвале, но потерял в лифте.',
+                translation: '(I found myself in the basement but lost myself in the elevator.)',
+                lang: 'Russian'
+            }
+        ];
+
+        const auaPostsPoetry = [
+            'Between the beat and the silence,\nI found myself dancing.',
+            'We are frequencies\nLooking for resonance\nIn a world of noise.',
+            'Bass drops,\nHeartbeats stop,\nSouls connect,\nTime forgot.',
+            'In der Nacht sind wir alle\nTänzer des Universums.',
+            'Love is just\nA 4/4 rhythm\nPlaying in our chest.',
+            'Techno taught me:\nSilence is not the absence of sound,\nBut the space between beats\nWhere magic lives.',
+            'I am not lost.\nI am exactly where\nThe bass wants me to be.',
+            'We came for music,\nStayed for transcendence,\nLeft as different people.',
+            'Berlin nights:\nWhere strangers become family\nAnd dawn becomes just\nAnother beginning.'
+        ];
+
+        const auaPostsGossip = [
+            'Heard the Berghain bouncer smiled yesterday. Apocalypse confirmed.',
+            'Rumor: Someone actually found the Sisyphos exit. It\'s a myth though.',
+            'Breaking: Local raver discovers sunlight, immediately returns to basement.',
+            'Insider info: The real treasure was the friends we made in the smoking area.',
+            'Leaked: New club opening hours 25/8. Time is just a construct anyway.',
+            'Plot twist: The DJ booth is actually a time machine.',
+            'Confirmed: Club toilets are portals to alternate dimensions.',
+            'Update: Scientists prove that Berlin clubs exist outside of physics.',
+            'Exclusive: Local person spotted leaving club before 10am. Investigation ongoing.',
+            'Tea: The real VIPs are the people who remember where they put their jacket.'
+        ];
+
+        const auaPostsChaos = [
+            'My phone autocorrected "bass" to "boss". Even technology gets it.',
+            'Weather report: 100% chance of bass with scattered euphoria.',
+            'PSA: If you can still feel your feet, the music isn\'t loud enough.',
+            'Philosophy class: If everyone is weird, is anyone really weird?',
+            'Breaking news: Local person achieves nirvana through repetitive beats.',
+            'Market update: Emotional stability down 90%, spiritual awakening up 420%.',
+            'Life status: Powered by techno, fueled by dreams, sustained by bass.',
+            'Error 404: Sleep not found. Please try again after sunrise.',
+            'System alert: Reality.exe has stopped working. Switching to rave.dll',
+            'User manual: To exit simulation, press any bass.',
+            'Warning: Side effects of clubbing may include enlightenment.',
+            'Patch notes: Fixed bug where people could leave before 6am.'
+        ];
+
+        const auaPostsDeep = [
+            'In the darkness of the club, I found light I never knew existed.',
+            'We are all just energy seeking vibration in this cosmic dance.',
+            'The bass doesn\'t just move through you. You become the bass.',
+            'Every night in Berlin teaches you something about yourself you never knew.',
+            'Dancing is just vertical dreaming with your eyes open.',
+            'Music is the universal language, but techno is the universe speaking.',
+            'We don\'t go to clubs to escape reality. We go to find the real one.',
+            'In the collective unconscious of the dancefloor, we are all one.',
+            'The club is a sacred space where transformation happens.',
+            'Sometimes you need to lose yourself completely to find who you really are.'
+        ];
+
+        // Generate initial posts
+        function initializePosts() {
+            // Add some starter posts with variety
+            const starterPosts = [
+                { user: auaUsernames[0], content: auaPostsGerman[0], type: 'normal' },
+                { user: auaUsernames[1], content: auaPostsMultilang[0].content, translation: auaPostsMultilang[0].translation, type: 'multilang' },
+                { user: auaUsernames[2], content: auaPostsPoetry[0], type: 'poetry' },
+                { user: auaUsernames[3], content: auaPostsGossip[0], type: 'gossip' },
+                { user: auaUsernames[4], content: auaPostsChaos[0], type: 'chaos' }
+            ];
+
+            starterPosts.forEach(post => {
+                addAuaPost(post.user, post.content, post.translation || '', generateTime(), post.type);
+            });
+        }
+
+        function generateRandomPost() {
+            const postTypes = ['german', 'english', 'multilang', 'poetry', 'gossip', 'chaos', 'deep'];
+            const randomType = postTypes[Math.floor(Math.random() * postTypes.length)];
+            const randomUser = auaUsernames[Math.floor(Math.random() * auaUsernames.length)];
+            const currentTime = generateTime();
+
+            let postContent = '';
+            let translation = '';
+            let postClass = randomType;
+
+            switch(randomType) {
+                case 'german':
+                    postContent = auaPostsGerman[Math.floor(Math.random() * auaPostsGerman.length)];
+                    postClass = 'normal';
+                    break;
+                case 'english':
+                    postContent = auaPostsEnglish[Math.floor(Math.random() * auaPostsEnglish.length)];
+                    postClass = 'normal';
+                    break;
+                case 'multilang':
+                    const multilangPost = auaPostsMultilang[Math.floor(Math.random() * auaPostsMultilang.length)];
+                    postContent = multilangPost.content;
+                    translation = multilangPost.translation;
+                    break;
+                case 'poetry':
+                    postContent = auaPostsPoetry[Math.floor(Math.random() * auaPostsPoetry.length)];
+                    break;
+                case 'gossip':
+                    postContent = auaPostsGossip[Math.floor(Math.random() * auaPostsGossip.length)];
+                    break;
+                case 'chaos':
+                    postContent = auaPostsChaos[Math.floor(Math.random() * auaPostsChaos.length)];
+                    break;
+                case 'deep':
+                    postContent = auaPostsDeep[Math.floor(Math.random() * auaPostsDeep.length)];
+                    break;
+            }
+
+            addAuaPost(randomUser, postContent, translation, currentTime, postClass);
+            updateStats();
+            console.log(`🎭 New AUA post: ${randomType.toUpperCase()}`);
+        }
+
+        function addUserPost() {
+            const content = prompt('🎭 Drop your club soul message to the void:');
+            if (content && content.trim()) {
+                const userPost = {
+                    name: '@you',
+                    emoji: '🌟'
+                };
+                addAuaPost(userPost, content.trim(), '', generateTime(), 'chaos');
+                updateStats();
+            }
+        }
+
+        function addAuaPost(user, content, translation, time, type) {
+            const auaGrid = document.getElementById('auaGrid');
+            const newPost = document.createElement('div');
+            newPost.className = `aua-post ${type}`;
+            newPost.dataset.type = type;
+            
+            newPost.innerHTML = `
+                <div class="aua-user">
+                    <span class="user-emoji">${user.emoji}</span>
+                    ${user.name}
+                </div>
+                <div class="aua-content">${content}</div>
+                ${translation ? `<div class="aua-translation">${translation}</div>` : ''}
+                <div class="aua-meta">
+                    <div class="aua-time">${time}</div>
+                    <div class="aua-type">${type}</div>
+                </div>
+            `;
+            
+            auaGrid.insertBefore(newPost, auaGrid.firstChild);
+            
+            // Keep only latest 50 posts
+            while (auaGrid.children.length > 50) {
+                auaGrid.removeChild(auaGrid.lastChild);
+            }
+
+            totalPosts++;
+        }
+
+        function generateTime() {
+            const hours = Math.floor(Math.random() * 24);
+            const minutes = Math.floor(Math.random() * 60);
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        }
+
+        function filterByType(type) {
+            activeFilter = type;
+            const posts = document.querySelectorAll('.aua-post');
+            
+            posts.forEach(post => {
+                if (type === 'all' || post.dataset.type === type) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+            
+            console.log(`🌀 Filter: ${type.toUpperCase()}`);
+        }
+
+        function toggleLanguages() {
+            multilingualMode = !multilingualMode;
+            const translations = document.querySelectorAll('.aua-translation');
+            
+            translations.forEach(translation => {
+                translation.style.display = multilingualMode ? 'block' : 'none';
+            });
+            
+            console.log(`🌍 Multilingual mode: ${multilingualMode ? 'ON' : 'OFF'}`);
+        }
+
+        function increaseChaos() {
+            chaosLevel = Math.min(chaosLevel + 1, 5);
+            
+            // Increase generation frequency based on chaos level
+            clearInterval(window.auaGenerator);
+            const interval = Math.max(2000, 8000 - (chaosLevel * 1200));
+            window.auaGenerator = setInterval(generateRandomPost, interval);
+            
+            // Update visual chaos
+            document.body.style.filter = `hue-rotate(${chaosLevel * 45}deg)`;
+            
+            updateStats();
+            console.log(`⚡ Chaos level: ${chaosLevel}/5`);
+        }
+
+        function clearAll() {
+            if (confirm('🔥 Reset the void? All souls will be released!')) {
+                document.getElementById('auaGrid').innerHTML = '';
+                totalPosts = 0;
+                updateStats();
+                console.log('💥 Void reset. Silence before the storm...');
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('totalSouls').textContent = totalPosts;
+            document.getElementById('chaosLevel').textContent = `${Math.min(chaosLevel * 20, 100)}%`;
+            document.getElementById('languageCount').textContent = multilingualMode ? '8' : '2';
+            document.getElementById('auaTime').textContent = generateTime();
+        }
+
+        // Initialize the chaos
+        initializePosts();
+        updateStats();
+
+        // Start the chaos generator
+        window.auaGenerator = setInterval(generateRandomPost, 6000);
+
+        // Update ticker
+        setInterval(() => {
+            const ticker = document.getElementById('chaosTickerContent');
+            const messages = [
+                '🎭 AFTER-AUA STATUS: Maximum chaos achieved',
+                '💫 Reality coherence: 12% and falling',
+                '🔥 New confessions loading every 6 seconds',
+                '🌍 Languages detected: Cosmic and club',
+                '⚡ Bass frequency: Transcendental',
+                '🎵 Souls currently dancing: ∞',
+                '👻 Ghost posts from the underground',
+                '🌙 Night mode: Permanent'
+            ];
+            
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            ticker.textContent = `${randomMessage} • `;
+        }, 8000);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'g': generateRandomPost(); break;
+                case 'c': increaseChaos(); break;
+                case 'l': toggleLanguages(); break;
+                case 'n': addUserPost(); break;
+                case 'r': clearAll(); break;
+            }
+        });
+
+        console.log('🎭 AFTER-AUA CHAMBER: FULLY ACTIVATED');
+        console.log('🌀 Chaos mode: ENGAGED');
+        console.log('⌨️  Hotkeys: G=Generate | C=Chaos | L=Languages | N=New Post | R=Reset');
+        console.log('💫 Digital hangover protocol: INITIATED');
+        console.log('🎵 Soul collection: IN PROGRESS');
+    </script>
+</body>
+</html>
